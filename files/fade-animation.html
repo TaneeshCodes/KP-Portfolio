@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Top-to-Bottom Fade Reveal</title>
+<style>
+  :root{
+    --bg: #14100e;
+  }
+  html, body{
+    margin:0;
+    height:100%;
+    background: var(--bg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  .frame{
+    position:relative;
+    width: 360px;
+    max-width: 90vw;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+  }
+  .frame img{
+    display:block;
+    width:100%;
+    height:auto;
+
+    /* start fully hidden by a mask covering it, and transparent */
+    opacity: 0;
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 0%, transparent 0%);
+    mask-image: linear-gradient(to bottom, black 0%, black 0%, transparent 0%);
+
+    animation: revealDown 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  @keyframes revealDown{
+    0%{
+      opacity: 0;
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 0%);
+      mask-image: linear-gradient(to bottom, black 0%, transparent 0%);
+    }
+    15%{
+      opacity: 1;
+    }
+    100%{
+      opacity: 1;
+      -webkit-mask-image: linear-gradient(to bottom, black 100%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 100%, transparent 100%);
+    }
+  }
+
+  /* respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce){
+    .frame img{
+      animation: none;
+      opacity: 1;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+
+  .replay{
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    color: #14100e;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+  <div class="frame">
+    <img id="pic" src="profile.png" alt="Profile photo">
+  </div>
+
+  <button class="replay" onclick="replay()">Replay animation</button>
+
+  <script>
+    function replay(){
+      const img = document.getElementById('pic');
+      img.style.animation = 'none';
+      // force reflow so the animation can restart
+      void img.offsetWidth;
+      img.style.animation = 'revealDown 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards';
+    }
+  </script>
+
+</body>
+</html>
