@@ -983,11 +983,40 @@ html:not(.anim-ready) .hero__portrait {
 .stat__label { margin-top: 12px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
 
 /* ---------- Projects ---------- */
+.projects__filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: clamp(32px, 5vw, 56px);
+}
+.filter-btn {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 10px 22px;
+  border-radius: 100px;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  background: transparent;
+  transition: all 0.35s var(--ease);
+}
+.filter-btn:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+.filter-btn.active {
+  background: var(--accent);
+  color: #16140F;
+  border-color: var(--accent);
+  box-shadow: 0 8px 20px -8px rgba(204,107,60,.4);
+}
+
 .projects__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(22px, 3vw, 34px); }
 .card {
   position: relative; display: flex; flex-direction: column;
   background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg);
-  overflow: hidden; transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .5s var(--ease);
+  overflow: hidden; transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .5s var(--ease), opacity .4s var(--ease);
 }
 .card:hover { transform: translateY(-6px); box-shadow: 0 38px 70px -34px rgba(0,0,0,.62); border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); }
 .card--feature { grid-column: 1 / -1; display: grid; grid-template-columns: 1.05fr 1fr; }
@@ -1398,10 +1427,19 @@ html.anim-ready .reveal[data-d="4"] { transition-delay: .32s; }
         excuse to understand a little more of the whole stack.</p>
     </div>
 
+    <!-- Project Filters -->
+    <div class="projects__filter reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="computervision">Computer Vision</button>
+      <button class="filter-btn" data-filter="machine-learning">Machine Learning</button>
+      <button class="filter-btn" data-filter="fullstack">Full Stack (Web)</button>
+      <button class="filter-btn" data-filter="embedded">Embedded</button>
+    </div>
+
     <div class="projects__grid">
 
       <!-- Feature -->
-      <article class="card card--feature reveal">
+      <article class="card card--feature reveal" data-category="computervision">
         <div class="card__media">
           <span class="card__kind">Computer Vision</span>
           <img class="card__shot" src="assets/98ca8d59-a8eb-4c0e-b61e-85b98913fd98.png" alt="Hand gesture recognition system detecting a fist gesture at 100% confidence">
@@ -1424,7 +1462,7 @@ html.anim-ready .reveal[data-d="4"] { transition-delay: .32s; }
       </article>
 
       <!-- Holo Battalion -->
-      <article class="card reveal" data-d="1">
+      <article class="card reveal" data-d="1" data-category="computervision embedded">
         <div class="card__media">
           <span class="card__kind">Robotics · ROS2</span>
           <img class="card__shot" src="assets/d621ef1a-3ec3-4d68-a70e-893863bee1c2.webp" alt="Holo Battalion autonomous bots" style="object-position:50% 45%;">
@@ -1444,8 +1482,9 @@ html.anim-ready .reveal[data-d="4"] { transition-delay: .32s; }
         </div>
       </article>
 
+
       <!-- Smart Auth -->
-      <article class="card reveal" data-d="2">
+      <article class="card reveal" data-d="2" data-category="embedded">
         <div class="card__media">
           <span class="card__kind">Embedded · IoT</span>
           <img class="card__shot" src="assets/7cf56772-552e-41be-bf4d-118d929323ed.webp" alt="Smart Authentication System hardware" style="object-position:50% 50%;">
@@ -1462,12 +1501,11 @@ html.anim-ready .reveal[data-d="4"] { transition-delay: .32s; }
             <span class="tech">Sensors</span>
             <span class="tech">C / C++</span>
           </div>
-
         </div>
       </article>
 
       <!-- CyberVerse -->
-      <article class="card reveal" data-d="1">
+      <article class="card reveal" data-d="1" data-category="fullstack">
         <div class="card__media">
           <span class="card__kind">Web App</span>
           <img class="card__shot" src="assets/a30b6271-ccbc-4f36-b1f2-b256fa7c2b72.webp" alt="CyberVerse gaming lounge booking site" style="object-position:50% 50%;">
@@ -1489,7 +1527,7 @@ html.anim-ready .reveal[data-d="4"] { transition-delay: .32s; }
       </article>
 
       <!-- HealthSphere -->
-      <article class="card reveal" data-d="2">
+      <article class="card reveal" data-d="2" data-category="fullstack">
         <div class="card__media">
           <span class="card__kind">Web · AI</span>
           <img class="card__shot" style="object-position: 50% 42%;" src="assets/52311ec0-56f3-4932-90a1-5ef298ae521c.png" alt="HealthSphere landing page — Your Health, Connected in One Place, with a 3D stethoscope and patient stats">
@@ -1505,13 +1543,13 @@ html.anim-ready .reveal[data-d="4"] { transition-delay: .32s; }
             <span class="tech">Node.js</span>
             <span class="tech">Three.js</span>
           </div>
-
         </div>
       </article>
 
     
+
       <!-- Fraud Detection -->
-      <article class="card reveal" data-d="1">
+      <article class="card reveal" data-d="1" data-category="machine-learning">
         <div class="card__media">
           <span class="card__kind">Machine Learning · Streamlit</span>
           <img class="card__shot" style="object-position: 50% 50%;" src="files/fraud_detection.png" alt="Fraud Detection App interface showing prediction options and transaction details">
@@ -1534,7 +1572,7 @@ html.anim-ready .reveal[data-d="4"] { transition-delay: .32s; }
       </article>
 
       <!-- Predictive Maintenance -->
-      <article class="card reveal" data-d="2">
+      <article class="card reveal" data-d="2" data-category="machine-learning">
         <div class="card__media">
           <span class="card__kind">Machine Learning · Digital Twin</span>
           <img class="card__shot" style="object-position: 50% 50%;" src="files/predictive_maintenance.png" alt="AI-powered Predictive Maintenance Digital Twin interface showing controls, metrics, and fleet health graph">
@@ -1827,6 +1865,44 @@ html.anim-ready .reveal[data-d="4"] { transition-delay: .32s; }
     img.addEventListener("error", function () {
       img.style.display = "none";
     }, { once: true });
+  });
+
+  // Projects filtering logic
+  var filterButtons = document.querySelectorAll('.filter-btn');
+  var projectCards = document.querySelectorAll('.projects__grid .card');
+
+  filterButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      filterButtons.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      
+      var filter = btn.getAttribute('data-filter');
+      
+      projectCards.forEach(function (card) {
+        var categories = card.getAttribute('data-category') || '';
+        var isMatch = filter === 'all' || categories.split(' ').indexOf(filter) !== -1;
+        
+        if (isMatch) {
+          if (card.style.display === 'none') {
+            card.style.display = '';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(15px) scale(0.98)';
+          }
+          setTimeout(function () {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0) scale(1)';
+          }, 50);
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(15px) scale(0.98)';
+          setTimeout(function () {
+            if (card.style.opacity === '0') {
+              card.style.display = 'none';
+            }
+          }, 400);
+        }
+      });
+    });
   });
 })();
 </script>
